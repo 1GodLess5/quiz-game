@@ -11,18 +11,21 @@ public class ReadFile {
             String line;
 
             while ((line = scanner.readLine()) != null) {
-                String[] parts = line.split("[\\-!]");
+                String[] parts = line.split("[-!]");
                 HashSet<String> answers = new HashSet<>();
                 HashSet<String> correctAnswers = new HashSet<>();
-                String question = parts[0];
-                for (int i = 1; i < 5; i++){
+
+                String questionTopic = parts[0];
+                String question = parts[1];
+
+                for (int i = 2; i < 6; i++){
                     answers.add(parts[i]);
                 }
-
-                for (int i = 5; i < parts.length; i++){
+                for (int i = 6; i < parts.length; i++){
                     correctAnswers.add(parts[i]);
                 }
-                Questions questionObject = new Questions(question, answers, correctAnswers.size(), correctAnswers);
+
+                Questions questionObject = new Questions(questionTopic, question, answers, correctAnswers.size(), correctAnswers);
                 questions.add(questionObject);
             }
         } catch (IOException e) {
