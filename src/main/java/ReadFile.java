@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 public class ReadFile {
     public static HashSet<Questions> read(){
@@ -12,14 +14,14 @@ public class ReadFile {
 
             while ((line = scanner.readLine()) != null) {
                 String[] parts = line.split("[-!]");
-                HashSet<String> answers = new HashSet<>();
-                HashSet<String> correctAnswers = new HashSet<>();
+                HashMap<Integer, String> answers = new HashMap<>();
+                LinkedHashSet<String> correctAnswers = new LinkedHashSet<>();
 
                 String questionTopic = parts[0];
                 String question = parts[1];
 
                 for (int i = 2; i < 6; i++){
-                    answers.add(parts[i]);
+                    answers.put(i - 1, parts[i]);
                 }
                 for (int i = 6; i < parts.length; i++){
                     correctAnswers.add(parts[i]);
