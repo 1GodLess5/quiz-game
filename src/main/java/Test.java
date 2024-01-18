@@ -54,7 +54,9 @@ public class Test {
                 }
             }
         }
-        System.out.println("You have got " + points + " point out of " + questionCount + " questions.");
+        System.out.println("You have got " + points + " points out of " + questionCount + " questions.");
+        System.out.println();
+        System.out.println();
     }
 
     private static boolean isCorrect(int userAnswer, Questions question){
@@ -78,6 +80,7 @@ public class Test {
 
         if (points == question.getNumberOfCorrectAnswers()){
             System.out.println("Correct.");
+            System.out.println();
             return true;
         }
         return false;
