@@ -1,13 +1,14 @@
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Questions {
     private String topic;
     private String question;
-    private HashSet<String> answers = new HashSet<>();
+    private HashMap<Integer, String> answers = new HashMap<>();
     private int numberOfCorrectAnswers;
     private HashSet<String> correctAnswers = new HashSet<>();
 
-    public Questions(String topic, String question, HashSet<String> answers, int numberOfCorrectAnswers, HashSet<String> correctAnswers){
+    public Questions(String topic, String question, HashMap<Integer, String> answers, int numberOfCorrectAnswers, HashSet<String> correctAnswers){
         this.topic = topic;
         this.question = question;
         this.answers = answers;
@@ -23,7 +24,7 @@ public class Questions {
         return this.question;
     }
 
-    public HashSet<String> getAnswers() {
+    public HashMap<Integer, String> getAnswers() {
         return this.answers;
     }
 
