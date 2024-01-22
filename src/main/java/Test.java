@@ -1,19 +1,27 @@
 import java.util.*;
 
 public class Test {
-    public static void takeTest(HashSet<Questions> questions, String testTopic){
+    public static void takeTest(List<Quiz> quizzes, String testTopic){
         Scanner scanner = new Scanner(System.in);
         int points = 0;
         int questionCount = 0;
 
-        for (Questions question : questions){
+        for (Quiz quiz : quizzes){
             int singleChoiceAnswer;
             int multipleChoiceAnswer;
 
-            if (question.getTopic().equals(testTopic)){
+            if (quiz.getQuizTopic().equals(testTopic)){
                 questionCount++;
                 // prints question
-                System.out.println(question.getQuestion());
+                List<Question> questions = quiz.getQuestions();
+                for (Question question : questions){
+                    System.out.println(question.getQuestion());
+                    for (Answer answer : question.getAnswers()){
+                        System.out.println(answer.getAnswerOrder() + ") " + answer.getAnswerText());
+                    }
+                }
+                // TODO continue here
+
                 // prints possible answers
                 for (Map.Entry<Integer, String> answer : question.getAnswers().entrySet()){
                     System.out.println(answer.getKey() + ") " + answer.getValue());
@@ -59,7 +67,7 @@ public class Test {
         System.out.println();
     }
 
-    private static boolean isCorrect(int userAnswer, Questions question){
+    private static boolean isCorrect(int userAnswer, Question question){
         String userString = Integer.toString(userAnswer);
         char[] answerToCheck = userString.toCharArray();
         int points = 0;

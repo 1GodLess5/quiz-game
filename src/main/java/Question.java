@@ -7,7 +7,7 @@ public class Question {
     private boolean isSingleChoice;
 
 
-    public Question(String topic, String question, List<Answer> answers){
+    public Question(String question, List<Answer> answers){
         this.question = question;
         this.answers = answers;
     }

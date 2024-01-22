@@ -1,21 +1,19 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
-        HashSet<Questions> questions = ReadFile.read();
-        ArrayList<QuestionSet> questionSets = new ArrayList<>();
-        for (Questions question : questions){
-            QuestionSet.initiateSets(questionSets, question.getTopic());
-        }
+        List<Quiz> quiz = ReadFile.read();
 
         welcomeMessage();
-        String testTopic = mainMenu(questionSets);
-        while (!testTopic.equals("finish")){
-            Test.takeTest(questions, testTopic);
-            testTopic = mainMenu(questionSets);
-        }
+        String testTopic = mainMenu(quiz);
+        System.out.println(testTopic);
+//        while (!testTopic.equals("finish")){
+//            Test.takeTest(questions, testTopic);
+//            testTopic = mainMenu(questionSets);
+//        }
 
         System.out.println("Thank you for playing my Quiz Game! ");
     }
@@ -34,12 +32,12 @@ public class Main {
         System.out.println();
     }
 
-    public static String mainMenu(ArrayList<QuestionSet> questionSets){
+    public static String mainMenu(List<Quiz> quizzes){
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Question topics:");
-        for (int i = 0; i < questionSets.size(); i++){
-            System.out.println((i + 1) + ") " + questionSets.get(i).getSet());
+        for (Quiz quiz : quizzes){
+            System.out.println((quiz.getQuizOrder() + 1) + ") " + quiz.getQuizTopic());
         }
         System.out.println("5) Exit()");
         System.out.println("Please pick one topic: ");
@@ -49,7 +47,7 @@ public class Main {
             try {
                 choice = scanner.nextInt();
 
-                if (choice < 1 || choice > questionSets.size() + 1){
+                if (choice < 1 || choice > quizzes.size() + 1){
                     System.out.println("Oops, invalid input.");
                     continue;
                 }
@@ -59,9 +57,9 @@ public class Main {
                 scanner.next();
             }
         }
-        if (choice == questionSets.size() + 1){
+        if (choice == quizzes.size() + 1){
             return "finish";
         }
-        return questionSets.get(choice-1).getSet();
+        return quizzes.get(choice-1).getQuizTopic();
     }
 }
