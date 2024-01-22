@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Question {
-    private final String question;
+    private String question;
     private List<Answer> answers = new ArrayList<>();
     private final Set<String> correctAnswers = new HashSet<>();
     private boolean isSingleChoice;
