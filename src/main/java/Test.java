@@ -11,53 +11,50 @@ public class Test {
             int multipleChoiceAnswer;
 
             if (quiz.getQuizTopic().equals(testTopic)){
-                questionCount++;
-                // prints question
+                // prints question and answers
                 List<Question> questions = quiz.getQuestions();
+                System.out.println();
+                System.out.println();
+                System.out.println(testTopic);
                 for (Question question : questions){
+                    questionCount++;
                     System.out.println(question.getQuestion());
                     for (Answer answer : question.getAnswers()){
                         System.out.println(answer.getAnswerOrder() + ") " + answer.getAnswerText());
                     }
-                }
-                // TODO continue here
 
-                // prints possible answers
-                for (Map.Entry<Integer, String> answer : question.getAnswers().entrySet()){
-                    System.out.println(answer.getKey() + ") " + answer.getValue());
-                }
+                    if (question.isSingleChoice()){
+                        System.out.println("This is single choice question.");
+                        System.out.println("Please enter your answer (1 or 2 or 3 or 4): ");
 
-                if (question.getNumberOfCorrectAnswers() == 1){
-                    System.out.println("This is single choice question.");
-                    System.out.println("Please enter your answer (1 or 2 or 3 or 4): ");
+                        while (true){
+                            try {
+                                singleChoiceAnswer = scanner.nextInt();
 
-                    while (true){
-                        try {
-                            singleChoiceAnswer = scanner.nextInt();
+                                if (singleChoiceAnswer < 1 || singleChoiceAnswer > 4){
+                                    System.out.println("Oops, invalid answer.");
+                                    System.out.println("Please try again: ");
+                                    continue;
+                                }else {
+                                    if (isCorrect(singleChoiceAnswer, question)){
+                                        points++;
+                                    }
 
-                            if (singleChoiceAnswer < 1 || singleChoiceAnswer > 4){
+                                }
+                                break;
+                            } catch (Exception e){
                                 System.out.println("Oops, invalid answer.");
                                 System.out.println("Please try again: ");
-                                continue;
-                            }else {
-                                if (isCorrect(singleChoiceAnswer, question)){
-                                    points++;
-                                }
-
+                                scanner.next();
                             }
-                            break;
-                        } catch (Exception e){
-                            System.out.println("Oops, invalid answer.");
-                            System.out.println("Please try again: ");
-                            scanner.next();
                         }
-                    }
-                } else{
-                    System.out.println("This is multiple choice question.");
-                    System.out.println("Please enter your answers not separated by anything (example: 123): ");
-                    multipleChoiceAnswer = answerValidator(scanner);
-                    if (isCorrect(multipleChoiceAnswer, question)){
-                        points++;
+                    } else{
+                        System.out.println("This is multiple choice question.");
+                        System.out.println("Please enter your answers not separated by anything (example: 123): ");
+                        multipleChoiceAnswer = answerValidator(scanner);
+                        if (isCorrect(multipleChoiceAnswer, question)){
+                            points++;
+                        }
                     }
                 }
             }
@@ -72,21 +69,20 @@ public class Test {
         char[] answerToCheck = userString.toCharArray();
         int points = 0;
 
-        for (Map.Entry<Integer, String> entry : question.getAnswers().entrySet()){
-            for (String correctAnswer : question.getCorrectAnswers()){
-                if (correctAnswer.equals(entry.getValue())){
-                    String answerString = Integer.toString(entry.getKey());
-                    char[] answerChar = answerString.toCharArray();
-                    for (int i = 0; i < answerToCheck.length; i++){
-                        if (answerChar[0] == answerToCheck[i]){
-                            points++;
-                        }
+        for (Answer answer : question.getAnswers()){
+
+            if (answer.isCorrect()){
+                String answerString = Integer.toString(answer.getAnswerOrder());
+                char[] answerChar = answerString.toCharArray();
+                for (int i = 0; i < answerToCheck.length; i++){
+                    if (answerChar[0] == answerToCheck[i]){
+                        points++;
                     }
                 }
             }
         }
 
-        if (points == question.getNumberOfCorrectAnswers()){
+        if (points == question.getCorrectAnswers().size()){
             System.out.println("Correct.");
             System.out.println();
             return true;
