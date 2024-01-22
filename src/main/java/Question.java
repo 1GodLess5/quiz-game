@@ -1,38 +1,41 @@
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
-public class Questions {
-    private String topic;
-    private String question;
-    private HashMap<Integer, String> answers = new HashMap<>();
-    private int numberOfCorrectAnswers;
-    private HashSet<String> correctAnswers = new HashSet<>();
+public class Question {
+    private final String question;
+    private List<Answer> answers = new ArrayList<>();
+    private final Set<String> correctAnswers = new HashSet<>();
+    private boolean isSingleChoice;
 
-    public Questions(String topic, String question, HashMap<Integer, String> answers, int numberOfCorrectAnswers, HashSet<String> correctAnswers){
-        this.topic = topic;
+
+    public Question(String topic, String question, List<Answer> answers){
         this.question = question;
         this.answers = answers;
-        this.numberOfCorrectAnswers = numberOfCorrectAnswers;
-        this.correctAnswers = correctAnswers;
-    }
-
-    public String getTopic(){
-        return this.topic;
     }
 
     public String getQuestion() {
         return this.question;
     }
 
-    public HashMap<Integer, String> getAnswers() {
+    public List<Answer> getAnswers() {
         return this.answers;
     }
 
-    public int getNumberOfCorrectAnswers() {
-        return this.numberOfCorrectAnswers;
+    public boolean isSingleChoice() {
+        int count = 0;
+        for (Answer answer : this.answers){
+            if (answer.isCorrect()){
+                count++;
+            }
+        }
+        return count == 1;
     }
 
-    public HashSet<String> getCorrectAnswers() {
+    public Set<String> getCorrectAnswers() {
+        for (Answer answer : this.answers){
+            if (answer.isCorrect()){
+                this.correctAnswers.add(answer.getAnswerText());
+            }
+        }
         return this.correctAnswers;
     }
 }
