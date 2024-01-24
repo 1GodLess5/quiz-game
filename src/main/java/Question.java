@@ -2,9 +2,8 @@ import java.util.*;
 
 public class Question {
     private String question;
-    private List<Answer> answers = new ArrayList<>();
+    private List<Answer> answers;
     private final Set<String> correctAnswers = new HashSet<>();
-    private boolean isSingleChoice;
 
 
     public Question(String question, List<Answer> answers){

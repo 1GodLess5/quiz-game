@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Quiz {
     private final String quizTopic;
-    private List<Question> questions = new ArrayList<>();
+    private List<Question> questions;
     private final int quizOrder;
 
     public Quiz(String quizTopic, List<Question> questions, int quizOrder) {
